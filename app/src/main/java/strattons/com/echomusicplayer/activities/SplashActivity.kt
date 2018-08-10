@@ -25,7 +25,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         if (!hasPermissions(this@SplashActivity, *permissionString)){
-            //We have to ask for permissions
             ActivityCompat.requestPermissions(this@SplashActivity,permissionString,831)
         }
         else

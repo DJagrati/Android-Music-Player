@@ -11,13 +11,12 @@ import android.widget.TextView
 import strattons.com.echomusicplayer.activities.MainActivity
 import strattons.com.echomusicplayer.R
 import strattons.com.echomusicplayer.fragments.AboutUsFragment
-import strattons.com.echomusicplayer.fragments.FavouriteFragment
 import strattons.com.echomusicplayer.fragments.MainActivityFragment
 import strattons.com.echomusicplayer.fragments.SettingsFragment
+import strattons.com.echomusicplayer.fragments.favouriteFragment
 
 class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntArray, _context: Context) : RecyclerView.Adapter
 <NavigationDrawerAdapter.navViewHolder>() {
-
 
     var contentList: ArrayList<String>? = null
     var getImages: IntArray? = null
@@ -28,12 +27,10 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
         this.getImages = _getImages
         this.mContext = _context
     }
-
-
     override fun onBindViewHolder(holder: navViewHolder, position: Int) {
         holder?.iconGET?.setBackgroundResource(getImages?.get(position) as Int)
         holder?.textGET?.setText(contentList?.get(position))
-        holder?.contentHolder?.setOnClickListener {
+        holder?.contentHolder?.setOnClickListener({
             if (position == 0) {
                 val mainScreenFragment = MainActivityFragment()
                 (mContext as MainActivity).supportFragmentManager
@@ -41,7 +38,7 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
                         .replace(R.id.details_fragment, mainScreenFragment)
                         .commit()
             } else if (position == 1) {
-                val favouriteFragment = FavouriteFragment()
+                val favouriteFragment = favouriteFragment()
                 (mContext as MainActivity).supportFragmentManager
                         .beginTransaction()
                         .replace(R.id.details_fragment, favouriteFragment)
@@ -52,7 +49,7 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
                         .beginTransaction()
                         .replace(R.id.details_fragment, settingsFragment)
                         .commit()
-            } else{
+            } else {
                 val aboutusFragment = AboutUsFragment()
                 (mContext as MainActivity).supportFragmentManager
                         .beginTransaction()
@@ -60,7 +57,7 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
                         .commit()
             }
             MainActivity.statified.drawerlayout?.closeDrawers()
-        }
+        })
 
     }
 
@@ -72,15 +69,13 @@ class NavigationDrawerAdapter(_contentList: ArrayList<String>, _getImages: IntAr
     }
 
 
-
-
     override fun getItemCount(): Int {
         return (contentList as ArrayList).size
     }
 
     class navViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var iconGET = ImageView(null)
-        var textGET = TextView(null)
+        var iconGET: ImageView? = null
+        var textGET: TextView? = null
         var contentHolder: RelativeLayout? = null
 
         init {
